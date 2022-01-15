@@ -1,3 +1,7 @@
+using System.Xml.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Mime;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Net.Security;
 using System;
@@ -39,6 +43,7 @@ namespace proEventos.API
 
             );
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "proEventos.API", Version = "v1" });
@@ -58,6 +63,10 @@ namespace proEventos.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowAnyOrigin()
+            );
 
             app.UseAuthorization();
 
