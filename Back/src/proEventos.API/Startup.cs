@@ -1,3 +1,4 @@
+using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Mime;
@@ -17,8 +18,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using proEventos.API.Data;
+using proEventos.Persistence;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
+using proEventos.Persistence.Contextos;
+using ProEventos.Application.Contratos;
+using ProEventos.Application;
+using ProEventos.Persistence.Contratos;
+using ProEventos.Persistence;
 
 namespace proEventos.API
 {
@@ -37,12 +44,24 @@ namespace proEventos.API
             // services.AddDbContext<DataContext>(
             //     context => context.UseSqlite()
             // )
-            services.AddDbContext<DataContext>(
+            services.AddDbContext<ProEventosContext>(
 
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
 
             );
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+                
+                //.AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
+                //Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                //)
+            //);
+
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IGeralPersistence, GeralPersistence>();
+            services.AddScoped<IEventoPersistence, EventoPersistence>();
+
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
