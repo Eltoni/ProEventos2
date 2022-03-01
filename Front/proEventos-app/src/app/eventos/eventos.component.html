@@ -21,22 +21,32 @@
   <div class="col-auto">
     <label>Filtro: </label>
   </div>
-  
+
   <div class="col-auto">
 
     <input class="form-control"  placeholder="Buscar" [(ngModel)] = "filtroLista">
 
   </div>
 
-  
+
 </div>
 <hr>
-
-
-<table class="table table-striped">
+<div class="table-responsive">
+<table class="table table-striped content">
   <thead class="table-dark">
     <tr>
-      <th><button type="button" class="btn btn-outline-light btn-sm" (click)="mostraImagem()">{{ !mostrarImagem ? "Exibir" : "Ocultar" }}</button></th>
+
+      <th>
+        
+        <button type="button" class="btn btn-outline-light btn-sm" (click)="mostraImagem()">
+          
+          <i class = "{{!mostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash' }}"></i>
+          
+          {{ !mostrarImagem ? "Exibir" : "Ocultar" }}
+         
+        </button>
+      </th>
+
       <th>#</th>
       <th>Tema</th>
       <th>Local</th>
@@ -49,20 +59,33 @@
 
   <tbody *ngIf="eventos && eventos.length">
     <tr *ngFor="let evento of eventosFiltados">
-      <td> <img [collapse]="!mostrarImagem" [isAnimated]="true" src="/assets/{{ evento.imagemURL }}" 
-        [style.width.px]="250" [style.margin.px]="2">
       
+      <td> <img [collapse]="!mostrarImagem" [isAnimated]="true" src="/assets/{{ evento.imagemURL }}"
+        [style.width.px]="250" [style.margin.px]="2">
+
       </td>
-      <td>{{ evento.eventoId }}</td>
+      <td>{{ evento.id }}</td>
       <td>{{ evento.tema }}</td>
       <td>{{ evento.local }}</td>
-      <td>{{ evento.dataEvento }}</td>
+      <td>{{ evento.dataEvento | DataTimeFormatPipe }}</td>
       <td>{{ evento.qtdPessoas }}</td>
-      <td>{{ evento.lote }}</td>
+      <td>{{ evento.lote[0].nome |uppercase }}</td>
       <td>
+
+        <button type="submit" class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar">
+
+          <i class = "fa fa-edit"></i>
+          
+          Editar
         
-        <button type="submit" class="btn btn-outline-primary btn-sm me-md-2"> Editar</button>
-        <button type="submit" class="btn btn-outline-danger btn-sm"> Deletar </button>
+        </button>
+        <button type="submit" class="btn btn-outline-danger btn-sm" (click)="openModal(template)"  tooltip="Deletar">
+          
+          <i class = "fa fa-trash"></i>
+
+          Deletar 
+        
+        </button>
 
       </td>
     </tr>
@@ -77,5 +100,14 @@
     </tr>
   </tfoot>
 </table>
-
+</div>
 <hr>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Deseja Realmente Deletar Evento?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
+
