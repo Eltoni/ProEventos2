@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventosComponent } from './eventos/eventos.component';
-import { PalestrantesComponent } from './palestrantes/palestrantes.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 
@@ -16,6 +16,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule } from '@angular/forms'
 import { DataTimeFormatPipePipe } from './helpers/DataTimeFormatPipe.pipe';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
 
 
 @NgModule({
@@ -23,6 +27,10 @@ import { DataTimeFormatPipePipe } from './helpers/DataTimeFormatPipe.pipe';
     AppComponent,
     EventosComponent,
     PalestrantesComponent,
+    PerfilComponent,
+    ContatosComponent,
+    DashboardComponent,
+    TituloComponent,
     NavComponent,
     DataTimeFormatPipePipe
   ],
